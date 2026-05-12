@@ -1,13 +1,16 @@
 package main;
 
 import model.User;
-import model.Wallet;
+import service.UserService;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        // Create User Object
+        UserService userService = new UserService();
+
+
+        // Create Users
         User user1 = new User(
                 "U101",
                 "Rama",
@@ -16,19 +19,32 @@ public class Main {
                 1234
         );
 
-        // Create Wallet Object
-        Wallet wallet = new Wallet();
+        User user2 = new User(
+                "U102",
+                "Neha",
+                "9999999999",
+                3000.0,
+                5678
+        );
 
-        // Print User Details
-        System.out.println(user1);
 
-        // Check Balance
-        wallet.checkBalance(user1);
+        // Register Users
+        userService.registerUser(user1);
 
-        // Add Money
-        wallet.addMoney(user1, 2000);
+        userService.registerUser(user1);
 
-        // Check Updated Balance
-        wallet.checkBalance(user1);
+
+        // Display Users
+        System.out.println("\nAll Users:");
+
+        userService.displayUsers();
+
+
+        // Search User
+        System.out.println("\nSearch Result:");
+
+        User foundUser = userService.searchUser("9876543210");
+
+        System.out.println(foundUser);
     }
 }
