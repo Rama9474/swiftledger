@@ -1,13 +1,20 @@
 package main;
 
 import model.User;
+
 import service.UserService;
+
+import service.TransactionService;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        UserService userService = new UserService();
+        UserService userService =
+                new UserService();
+
+        TransactionService transactionService =
+                new TransactionService();
 
 
         // Create Users
@@ -31,7 +38,7 @@ public class Main {
         // Register Users
         userService.registerUser(user1);
 
-        userService.registerUser(user1);
+        userService.registerUser(user2);
 
 
         // Display Users
@@ -43,8 +50,39 @@ public class Main {
         // Search User
         System.out.println("\nSearch Result:");
 
-        User foundUser = userService.searchUser("9876543210");
+        User foundUser =
+                userService.searchUser(
+                        "9876543210"
+                );
 
         System.out.println(foundUser);
+
+
+        // Money Transfer
+        System.out.println("\nMoney Transfer:");
+
+        transactionService.sendMoney(
+                user1,
+                user2,
+                1000
+        );
+
+
+        // Show Transactions
+        System.out.println(
+                "\nTransaction History:"
+        );
+
+        transactionService.showTransactions();
+
+
+        // Updated Balances
+        System.out.println(
+                "\nUpdated Users:"
+        );
+
+        System.out.println(user1);
+
+        System.out.println(user2);
     }
 }
