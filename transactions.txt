@@ -1,0 +1,3 @@
+Transaction{transactionId='T101', sender='Rama', receiver='Neha', amount=1000.0}
+Transaction{transactionId='T101', sender='Rama', receiver='Neha', amount=1000.0}
+Transaction{transactionId='T101', sender='Neha', receiver='Rama', amount=500.0}

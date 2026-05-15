@@ -6,11 +6,14 @@ import model.User;
 import java.util.ArrayList;
 import exception.InsufficientBalance;
 
+import util.FileService;
+
 
 public class TransactionService {
 
     // Store all transactions
     ArrayList<Transaction> transactions = new ArrayList<>();
+    FileService fileService = new FileService();
 
 
     // Send Money
@@ -36,6 +39,7 @@ public class TransactionService {
 
         // Store transaction
         transactions.add(transaction);
+        fileService.writeTransaction(transaction.toString());
 
 
         System.out.println("Transaction Successful");

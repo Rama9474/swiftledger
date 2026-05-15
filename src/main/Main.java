@@ -62,7 +62,12 @@ public class Main {
         System.out.println("\nMoney Transfer:");
 
     try {
-        transactionService.sendMoney(user1, user2, 10000);
+        transactionService.sendMoney(user1, user2, 1000);
+        transactionService.sendMoney(
+        user2,
+        user1,
+        500
+);
      }catch (Exception e) {
         System.out.println(
         e.getMessage()
