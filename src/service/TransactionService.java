@@ -4,61 +4,41 @@ import model.Transaction;
 import model.User;
 
 import java.util.ArrayList;
+import exception.InsufficientBalance;
+
 
 public class TransactionService {
 
     // Store all transactions
-    ArrayList<Transaction> transactions =
-            new ArrayList<>();
+    ArrayList<Transaction> transactions = new ArrayList<>();
 
 
     // Send Money
-    public void sendMoney(
-            User sender,
-            User receiver,
-            double amount
-    ) {
+    public void sendMoney(User sender, User receiver, double amount) throws InsufficientBalance
+    {
 
         // Balance validation
         if(sender.getWalletBalance() < amount) {
-
-            System.out.println(
-                    "Insufficient Balance"
-            );
-
-            return;
+            throw new InsufficientBalance("Insufficient Balance");
         }
 
-
         // Deduct sender balance
-        sender.setWalletBalance(
-                sender.getWalletBalance() - amount
-        );
+        sender.setWalletBalance(sender.getWalletBalance() - amount);
 
 
         // Add receiver balance
-        receiver.setWalletBalance(
-                receiver.getWalletBalance() + amount
-        );
+        receiver.setWalletBalance(receiver.getWalletBalance() + amount);
 
 
         // Create transaction object
-        Transaction transaction =
-                new Transaction(
-                        "T101",
-                        sender.getName(),
-                        receiver.getName(),
-                        amount
-                );
+        Transaction transaction = new Transaction("T101",sender.getName(), receiver.getName(), amount);
 
 
         // Store transaction
         transactions.add(transaction);
 
 
-        System.out.println(
-                "Transaction Successful"
-        );
+        System.out.println("Transaction Successful");
     }
 
 

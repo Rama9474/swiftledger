@@ -61,11 +61,13 @@ public class Main {
         // Money Transfer
         System.out.println("\nMoney Transfer:");
 
-        transactionService.sendMoney(
-                user1,
-                user2,
-                1000
-        );
+    try {
+        transactionService.sendMoney(user1, user2, 10000);
+     }catch (Exception e) {
+        System.out.println(
+        e.getMessage()
+    );
+    }
 
 
         // Show Transactions
