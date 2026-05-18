@@ -3,7 +3,6 @@ package main;
 import model.User;
 
 import service.UserService;
-
 import service.TransactionService;
 
 public class Main {
@@ -37,13 +36,11 @@ public class Main {
 
         // Register Users
         userService.registerUser(user1);
-
         userService.registerUser(user2);
 
 
         // Display Users
         System.out.println("\nAll Users:");
-
         userService.displayUsers();
 
 
@@ -58,21 +55,52 @@ public class Main {
         System.out.println(foundUser);
 
 
+        // Login Test
+        System.out.println("\nLogin Test:");
+
+        boolean loginResult =
+                userService.authenticateUser(
+                        "9876543210",
+                        1234
+                );
+
+        if(loginResult) {
+
+            System.out.println(
+                    "Login Successful"
+            );
+
+        } else {
+
+            System.out.println(
+                    "Invalid Credentials"
+            );
+        }
+
+
         // Money Transfer
         System.out.println("\nMoney Transfer:");
 
-    try {
-        transactionService.sendMoney(user1, user2, 1000);
-        transactionService.sendMoney(
-        user2,
-        user1,
-        500
-);
-     }catch (Exception e) {
-        System.out.println(
-        e.getMessage()
-    );
-    }
+        try {
+
+            transactionService.sendMoney(
+                    user1,
+                    user2,
+                    1000
+            );
+
+            transactionService.sendMoney(
+                    user2,
+                    user1,
+                    500
+            );
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    e.getMessage()
+            );
+        }
 
 
         // Show Transactions

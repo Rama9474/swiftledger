@@ -32,6 +32,23 @@ public class UserService{
             System.out.println(user);
         }
     }
+    public boolean authenticateUser(String phoneNumber, int pin) 
+    { 
+    // Check if user exists
+    if(users.containsKey(phoneNumber)) 
+        {
+
+            User user = users.get(phoneNumber);
+
+            // Verify PIN
+            if(user.getPin() == pin) {
+
+                return true;
+            }
+        }
+
+    return false;
+}
 
 
 }
