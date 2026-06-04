@@ -6,34 +6,28 @@ import java.io.IOException;
 
 public class FileService {
 
-    public void writeTransaction(
-            String data
-    ) {
+        public void writeTransaction(
+                        String data) {
 
-        try {
+                try {
 
-            BufferedWriter writer =
-                    new BufferedWriter(
-                            new FileWriter(
-                                    "transactions.txt",
-                                    true
-                            )
-                    );
+                        BufferedWriter writer = new BufferedWriter(
+                                        new FileWriter(
+                                                        "transactions.txt",
+                                                        true));
 
+                        writer.write(data);
 
-            writer.write(data);
+                        writer.newLine();
 
-            writer.newLine();
+                        writer.close();
 
-            writer.close();
+                }
 
+                catch (IOException e) {
+
+                        System.out.println(
+                                        e.getMessage());
+                }
         }
-
-        catch(IOException e) {
-
-            System.out.println(
-                    e.getMessage()
-            );
-        }
-    }
 }

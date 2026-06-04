@@ -11,163 +11,109 @@ import util.FileService;
 
 public class TransactionService {
 
-    // Store all transactions
-    ArrayList<Transaction> transactions =
-            new ArrayList<>();
+        // Store all transactions
+        ArrayList<Transaction> transactions = new ArrayList<>();
 
-    FileService fileService =
-            new FileService();
+        FileService fileService = new FileService();
 
+        // Send Money
+        public void sendMoney(User sender,User receiver,double amount,int pin) throws InsufficientBalance {
+                // PIN Validation
+                if (sender.getPin() != pin) {
+                System.out.println("Invalid PIN");
+                return;
+                }
 
-    // Send Money
-    public void sendMoney(
-            User sender,
-            User receiver,
-            double amount,
-            int pin
-    ) throws InsufficientBalance
-    {
+                // Balance validation
+                if (sender.getWalletBalance() < amount) {
+                throw new InsufficientBalance("Insufficient Balance");
+                }
 
-        // PIN Validation
-        if(sender.getPin() != pin) {
+                // Deduct sender balance
+                sender.setWalletBalance(sender.getWalletBalance() - amount);
 
-            System.out.println(
-                    "Invalid PIN"
-            );
+                // Add receiver balance
+                receiver.setWalletBalance(receiver.getWalletBalance() + amount);
 
-            return;
+                // Create transaction object
+                String transactionId ="T" + (transactions.size() + 101);
+                Transaction transaction =new Transaction(transactionId,sender.getName(),receiver.getName(),amount);
+                // Store transaction
+                transactions.add(transaction);
+
+                // Save transaction to file
+                fileService.writeTransaction(transaction.toString());
+                System.out.println("Transaction Successful");
         }
 
+        // Display all transactions
+        public void showTransactions() {
 
-        // Balance validation
-        if(sender.getWalletBalance() < amount) {
+                for (Transaction transaction : transactions) {
+                System.out.println(transaction);
+                }
 
-            throw new InsufficientBalance(
-                    "Insufficient Balance"
-            );
         }
 
+        // Search transactions by sender
+        public void searchBySender(String sender) {
 
-        // Deduct sender balance
-        sender.setWalletBalance(
-                sender.getWalletBalance() - amount
-        );
-
-
-        // Add receiver balance
-        receiver.setWalletBalance(
-                receiver.getWalletBalance() + amount
-        );
-
-
-        // Create transaction object
-        Transaction transaction =
-                new Transaction(
-                        "T101",
-                        sender.getName(),
-                        receiver.getName(),
-                        amount
-                );
-
-
-        // Store transaction
-        transactions.add(transaction);
-
-
-        // Save transaction to file
-        fileService.writeTransaction(
-                transaction.toString()
-        );
-
-
-        System.out.println(
-                "Transaction Successful"
-        );
-    }
-
-
-    // Display all transactions
-    public void showTransactions() {
-
-        for(Transaction transaction : transactions) {
-
-            System.out.println(transaction);
+                for (Transaction transaction : transactions) {
+                        if (transaction.getSender().equals(sender)) {
+                                System.out.println(transaction);
+                        }
+                }
         }
 
-    }
+        // Search transactions by receiver
+        public void searchByReceiver(String receiver) {
 
-// Search transactions by sender
-public void searchBySender(String sender) {
+                for (Transaction transaction : transactions) {
 
-    for(Transaction transaction : transactions) {
+                        if (transaction.getReceiver().equals(receiver)) {
 
-        if(transaction.getSender().equals(sender)) {
-
-            System.out.println(transaction);
+                                System.out.println(transaction);
+                        }
+                }
         }
-    }
-}
 
+        // Total transactions count
+        public int getTotalTransactions() {
 
-// Search transactions by receiver
-public void searchByReceiver(String receiver) {
-
-    for(Transaction transaction : transactions) {
-
-        if(transaction.getReceiver().equals(receiver)) {
-
-            System.out.println(transaction);
+                return transactions.size();
         }
-    }
-}
 
-// Total transactions count
-public int getTotalTransactions() {
+        // Total amount transferred
+        public double getTotalTransactionAmount() {
 
-    return transactions.size();
-}
+                double total = 0;
 
-// Total amount transferred
-public double getTotalTransactionAmount() {
+                for (Transaction transaction : transactions) {
 
-    double total = 0;
+                        total += transaction.getAmount();
+                }
 
-    for(Transaction transaction : transactions) {
-
-        total += transaction.getAmount();
-    }
-
-    return total;
-}
-
-// Highest transaction amount
-public double getHighestTransactionAmount() {
-
-    double highest = 0;
-
-    for(Transaction transaction : transactions) {
-
-        if(transaction.getAmount() > highest) {
-
-            highest = transaction.getAmount();
+                return total;
         }
-    }
 
-    return highest;
-}
+        // Highest transaction amount
+        public double getHighestTransactionAmount() {
 
-// Average transaction amount
-public double getAverageTransactionAmount() {
+                double highest = 0;
+                for (Transaction transaction : transactions) {
+                        if (transaction.getAmount() > highest) {
+                                highest = transaction.getAmount();
+                        }
+                }
+                return highest;
+        }
 
-    if(transactions.size() == 0) {
-
-        return 0;
-    }
-
-    return getTotalTransactionAmount()
-            / transactions.size();
-}
-
-
+        // Average transaction amount
+        public double getAverageTransactionAmount() {
+                if (transactions.size() == 0) {
+                        return 0;
+                }
+                return getTotalTransactionAmount()/ transactions.size();
+        }
 
 }
