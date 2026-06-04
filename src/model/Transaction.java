@@ -11,6 +11,7 @@ public class Transaction {
     private double amount;
 
 
+    // Constructor
     public Transaction(
             String transactionId,
             String sender,
@@ -25,6 +26,34 @@ public class Transaction {
         this.receiver = receiver;
 
         this.amount = amount;
+    }
+
+
+    // Get Transaction ID
+    public String getTransactionId() {
+
+        return transactionId;
+    }
+
+
+    // Get Sender
+    public String getSender() {
+
+        return sender;
+    }
+
+
+    // Get Receiver
+    public String getReceiver() {
+
+        return receiver;
+    }
+
+
+    // Get Amount
+    public double getAmount() {
+
+        return amount;
     }
 
 

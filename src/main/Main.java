@@ -41,6 +41,7 @@ public class Main {
 
         // Display Users
         System.out.println("\nAll Users:");
+
         userService.displayUsers();
 
 
@@ -83,16 +84,30 @@ public class Main {
 
         try {
 
+            // Correct PIN
             transactionService.sendMoney(
                     user1,
                     user2,
-                    1000
+                    1000,
+                    1234
             );
 
+
+            // Correct PIN
             transactionService.sendMoney(
                     user2,
                     user1,
-                    500
+                    500,
+                    5678
+            );
+
+
+            // Wrong PIN
+            transactionService.sendMoney(
+                    user1,
+                    user2,
+                    1000,
+                    9999
             );
 
         } catch (Exception e) {
@@ -119,5 +134,51 @@ public class Main {
         System.out.println(user1);
 
         System.out.println(user2);
+
+
+
+
+
+        // Transaction Analytics
+
+System.out.println(
+        "\nTransactions Sent By Rama:"
+);
+
+transactionService.searchBySender(
+        "Rama"
+);
+
+
+System.out.println(
+        "\nTransactions Received By Rama:"
+);
+
+transactionService.searchByReceiver(
+        "Rama"
+);
+
+
+System.out.println(
+        "\nTotal Transactions: "
+        + transactionService.getTotalTransactions()
+);
+
+
+System.out.println(
+        "Total Amount Transferred: "
+        + transactionService.getTotalTransactionAmount()
+);
+
+System.out.println(
+        "Highest Transaction Amount: "
+        + transactionService.getHighestTransactionAmount()
+);
+
+System.out.println(
+        "Average Transaction Amount: "
+        + transactionService.getAverageTransactionAmount()
+);
+
     }
 }
